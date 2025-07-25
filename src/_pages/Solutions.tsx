@@ -41,12 +41,12 @@ const SolutionSection = ({
   title,
   content,
   isLoading,
-  currentLanguage
+
 }: {
   title: string
   content: React.ReactNode
   isLoading: boolean
-  currentLanguage: string
+
 }) => (
   <div className="space-y-2">
     <h2 className="text-[13px] font-medium text-white tracking-wide">
@@ -64,7 +64,7 @@ const SolutionSection = ({
       <div className="w-full">
         <SyntaxHighlighter
           showLineNumbers
-          language={currentLanguage == "golang" ? "go" : currentLanguage}
+            language={"cpp"}
           style={dracula}
           customStyle={{
             maxWidth: "100%",
@@ -121,15 +121,11 @@ export const ComplexitySection = ({
 
 export interface SolutionsProps {
   setView: (view: "queue" | "solutions" | "debug") => void
-  credits: number
-  currentLanguage: string
-  setLanguage: (language: string) => void
+
 }
 const Solutions: React.FC<SolutionsProps> = ({
   setView,
-  credits,
-  currentLanguage,
-  setLanguage
+
 }) => {
   const queryClient = useQueryClient()
   const contentRef = useRef<HTMLDivElement>(null)
@@ -429,8 +425,7 @@ const Solutions: React.FC<SolutionsProps> = ({
         <Debug
           isProcessing={debugProcessing}
           setIsProcessing={setDebugProcessing}
-          currentLanguage={currentLanguage}
-          setLanguage={setLanguage}
+
         />
       ) : (
         <div ref={contentRef} className="relative space-y-3 px-4 py-3">
@@ -454,9 +449,7 @@ const Solutions: React.FC<SolutionsProps> = ({
             onTooltipVisibilityChange={handleTooltipVisibilityChange}
             isProcessing={!problemStatementData || !solutionData}
             extraScreenshots={extraScreenshots}
-            credits={credits}
-            currentLanguage={currentLanguage}
-            setLanguage={setLanguage}
+
           />
 
           {/* Main Content - Modified width constraints */}
@@ -508,7 +501,7 @@ const Solutions: React.FC<SolutionsProps> = ({
                       title="Solution"
                       content={solutionData}
                       isLoading={!solutionData}
-                      currentLanguage={currentLanguage}
+
                     />
 
                     <ComplexitySection

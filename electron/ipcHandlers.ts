@@ -1,20 +1,14 @@
 // ipcHandlers.ts
 
 import { ipcMain, shell } from "electron"
-import { createClient } from "@supabase/supabase-js"
+
 import { randomBytes } from "crypto"
 import { IIpcHandlerDeps } from "./main"
 
 export function initializeIpcHandlers(deps: IIpcHandlerDeps): void {
   console.log("Initializing IPC handlers")
 
-  // Create Supabase client when needed
-  const createSupabaseClient = () => {
-    return createClient(
-      process.env.VITE_SUPABASE_URL!,
-      process.env.VITE_SUPABASE_ANON_KEY!
-    )
-  }
+
 
   // Credits handlers
   ipcMain.handle("set-initial-credits", async (_event, credits: number) => {
@@ -163,26 +157,7 @@ export function initializeIpcHandlers(deps: IIpcHandlerDeps): void {
     shell.openExternal(url)
   })
 
-  // Subscription handlers
-  ipcMain.handle("open-settings-portal", () => {
-    shell.openExternal("https://www.interviewcoder.co/settings")
-  })
-  ipcMain.handle("open-subscription-portal", async (_event, authData) => {
-    try {
-      const url = "https://www.interviewcoder.co/checkout"
-      await shell.openExternal(url)
-      return { success: true }
-    } catch (error) {
-      console.error("Error opening checkout page:", error)
-      return {
-        success: false,
-        error:
-          error instanceof Error
-            ? error.message
-            : "Failed to open checkout page"
-      }
-    }
-  })
+
 
   // Window management handlers
   ipcMain.handle("toggle-window", () => {
